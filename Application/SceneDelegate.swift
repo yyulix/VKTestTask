@@ -10,17 +10,17 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else {
             return
         }
         
-        if ((window? = UIWindow(windowScene: scene)) != nil) {
-            window?.rootViewController = BlackMateryViewController()
-            window?.makeKeyAndVisible()
-        }
+        let window = UIWindow(windowScene: scene)
+        
+        window.rootViewController = BlackMateryViewController()
+        window.makeKeyAndVisible()
+        self.window = window
+
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
