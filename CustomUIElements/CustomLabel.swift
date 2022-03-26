@@ -17,7 +17,7 @@ final class CustomLabel: UILabel {
         super.init(frame: .zero)
         text = titleText
         textColor = UIColor.white
-        backgroundColor = UIColor.init(red: 0 / 255, green: 119 / 255, blue: 255 / 255, alpha: 1.0)
+        backgroundColor = UIColor.AppColors.accentColor
         textAlignment = .center
         translatesAutoresizingMaskIntoConstraints = false
         font = UIFont.boldSystemFont(ofSize: fontSize)

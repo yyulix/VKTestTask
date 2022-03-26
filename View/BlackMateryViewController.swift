@@ -9,20 +9,29 @@ import UIKit
 
 class BlackMateryViewController: UIViewController {
     
+    private struct UIConstants {
+        static let titleSize = 24.0
+        static let textSize = 18.0
+        static let tableViewPadding = 100.0
+        static let stackPadding = 60.0
+        static let rowHeight = 40.0
+        static let stackHorisontalPadding = 20.0
+    }
+    
     enum TableSection: Int {
         case dataList
         case loader
     }
 
-    private lazy var titleLabel = CustomLabel(titleText: "Dark Matter Viewer", fontSize: 24.0)
+    private lazy var titleLabel = CustomLabel(titleText: "Dark Matter Viewer", fontSize: UIConstants.titleSize)
     
-    private lazy var timeLabel = CustomLabel(titleText: "Time", fontSize: 18.0)
+    private lazy var timeLabel = CustomLabel(titleText: "Time", fontSize: UIConstants.textSize)
     
-    private lazy var measureLabel = CustomLabel(titleText: "Measure", fontSize: 18.0)
+    private lazy var measureLabel = CustomLabel(titleText: "Measure", fontSize: UIConstants.textSize)
 
     private lazy var tableView: UITableView = {
             let table = UITableView()
-            table.backgroundColor = UIColor.init(white: 1.0, alpha: 0.8)
+            table.backgroundColor = UIColor.AppColors.tableColor
             table.dataSource = self
             table.delegate = self
             
@@ -44,37 +53,37 @@ class BlackMateryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+        configureUI()
         fetchData()
     }
         
-    private func setupView() {
+    private func configureUI() {
         
-        view.backgroundColor = UIColor.init(red: 0 / 255, green: 119 / 255, blue: 255 / 255, alpha: 1.0)
+        view.backgroundColor = UIColor.AppColors.accentColor
         
         view.addSubview(titleLabel)
-        titleLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
-        titleLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
-        titleLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        titleLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        titleLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: UIConstants.stackPadding).isActive = true
         
         let stack = UIStackView(arrangedSubviews: [timeLabel, measureLabel])
         stack.axis = .horizontal
         stack.distribution = .equalCentering
         
         view.addSubview(stack)
-        stack.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
-        stack.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -20).isActive = true
-        stack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
-        stack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
+        stack.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: UIConstants.stackHorisontalPadding).isActive = true
+        stack.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -1 * UIConstants.stackHorisontalPadding).isActive = true
+        stack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: UIConstants.stackPadding).isActive = true
+        stack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: UIConstants.tableViewPadding).isActive = true
         stack.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(tableView)
-        tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
-        tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-        tableView.rowHeight = 40
+        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: UIConstants.tableViewPadding).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.rowHeight = UIConstants.rowHeight
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -95,13 +104,16 @@ extension BlackMateryViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // 8
-        guard let listSection = TableSection(rawValue: section) else { return 0 }
+
+        guard let listSection = TableSection(rawValue: section) else {
+            return 0
+            
+        }
         switch listSection {
-        case .dataList:
-            return data.count
-        case .loader:
-            return data.count >= pageLimit ? 1 : 0
+            case .dataList:
+                return data.count
+            case .loader:
+                return data.count >= pageLimit ? 1 : 0
         }
     }
     
@@ -115,12 +127,9 @@ extension BlackMateryViewController: UITableViewDataSource, UITableViewDelegate 
             
             case .dataList:
                 let measurementElement = data[indexPath.row]
-            
-                var formatter = DateFormatter()
+                let formatter = DateFormatter()
                 formatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
-            
-                var formatteddate = formatter.string(from: measurementElement.time)
-            
+                let formatteddate = formatter.string(from: measurementElement.time)
                 cell.textLabel?.text = formatteddate
                 cell.textLabel?.textColor = .label
                 cell.detailTextLabel?.text = String(format: "%.3f", measurementElement.measurement)
