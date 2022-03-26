@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class BlackMateryViewController: UIViewController {
     
     enum TableSection: Int {
         case dataList
@@ -113,7 +113,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
+extension BlackMateryViewController: UITableViewDataSource, UITableViewDelegate {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2

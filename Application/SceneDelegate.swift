@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         if ((window? = UIWindow(windowScene: scene)) != nil) {
-            window?.rootViewController = ViewController()
+            window?.rootViewController = BlackMateryViewController()
             window?.makeKeyAndVisible()
         }
     }
