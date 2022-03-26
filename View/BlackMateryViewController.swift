@@ -14,36 +14,11 @@ class BlackMateryViewController: UIViewController {
         case loader
     }
 
-    private lazy var titleLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Dark Matter Viewer"
-        label.textColor = UIColor.white
-        label.backgroundColor = UIColor.init(red: 0 / 255, green: 119 / 255, blue: 255 / 255, alpha: 1.0)
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 24.0)
-        return label
-    }()
+    private lazy var titleLabel = CustomLabel(titleText: "Dark Matter Viewer", fontSize: 24.0)
     
-    private lazy var timeLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Time"
-        label.textColor = UIColor.white
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 18.0)
-        return label
-    }()
+    private lazy var timeLabel = CustomLabel(titleText: "Time", fontSize: 18.0)
     
-    private lazy var measureLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Measure"
-        label.textColor = UIColor.white
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 18.0)
-        return label
-    }()
+    private lazy var measureLabel = CustomLabel(titleText: "Measure", fontSize: 18.0)
 
     private lazy var tableView: UITableView = {
             let table = UITableView()
