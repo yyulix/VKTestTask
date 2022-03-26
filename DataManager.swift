@@ -14,7 +14,7 @@ struct DataManager {
             
         var data : [MeasurementModel] = []
         
-        for _ in 1...100 {
+        for _ in 1...20 {
             let measure = MeasurementModel(measurement: Double.random(in: 0..<1000), time: Date())
             data.append(measure)
         }
